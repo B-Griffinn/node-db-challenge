@@ -23,18 +23,18 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const body = req.body;
-    // const completeStatus = req.body.completed;
+    const completeStatus = req.body.completed;
     // console.log(completeStatus)
 
     
 
     Task.add(body)
     .then(task => {
-    //     if(req.body.completed === false) {
-    //         req.body.completed =+ 'false'
-    // } else if(completeStatus === true){
-    //     req.body.completed += 'true'
-    // } 
+        if(completeStatus === false) {
+            return completeStatus.toString('false')
+    } else if(completeStatus === true){
+        return completeStatus.toString('true')
+    } 
         res.status(201).json(task)
     
     })

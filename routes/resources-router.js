@@ -32,3 +32,5 @@ router.post('/', (req, res) => {
         res.status(500).json({ message: "There was an error trying to add that resource."})
     })
 })
+
+module.exports = router;

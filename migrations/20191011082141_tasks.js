@@ -17,8 +17,9 @@ exports.up = function(knex) {
     .notNullable()
     .defaultTo(0);
 
-    // FK = project_task
-    tbl.integer('project_task', 12) // << char limit for postgreS
+    // FK = project_id
+
+    tbl.integer('project_id', 12) // << char limit for postgreS
       .unsigned()
       .notNullable()
       .references('id')

@@ -8,6 +8,19 @@ module.exports = {
     add
 }
 
+function findById(id) {
+    return db('tasks')
+        .where({ id })
+        .first()
+        .then(task => {
+            if(task) {
+                return task
+            } else {
+                return ''
+            }
+        })
+}
+
 function find() {
     return db('tasks')
     // joining table, 1st col to join, operator, second col to join
@@ -17,6 +30,9 @@ function find() {
 function add(task) {
     return db('tasks')
     .insert(task)
+    .then(id => {
+        return findById(id[0])
+    })
 }
 
 

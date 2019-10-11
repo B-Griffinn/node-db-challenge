@@ -9,11 +9,11 @@ exports.up = function(knex) {
         .notNullable();
 
     // a notes column to add additional information.
-    tbl.string('note', 255); // << char limit for postgreS
+    tbl.text('note', 255); // << char limit for postgreS
 
     // a boolean that indicates if the task has been completed. This column cannot be NULL, the default value should be false.
     // create a boolean column that defaults to false/0 & is notNUllable
-    tbl.boolean('completed')
+    tbl.boolean('completed', 2)
     .notNullable()
     .defaultTo(0);
 

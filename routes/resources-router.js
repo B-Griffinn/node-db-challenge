@@ -7,7 +7,7 @@ retrieving a list of resources. ==> GET
 const express = require('express');
 
 // May need model functions in order to retrieve the resources
-const Resource = require('../helper_model_functions/resources.js');
+const Resource = require('../helper_functions/resources.js');
 
 const router = express.Router();
 

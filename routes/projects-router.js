@@ -7,13 +7,22 @@ retrieving a list of resources. ==> GET
 const express = require('express');
 
 // May need model functions in order to retrieve the resources
-const Project = require('../helper_model_functions/projects');
+const Project = require('../helper_functions/projects');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
+
+    const body = req.body;
+
     Project.find()
     .then(proj => {
+        if(body.completed === 1) {
+            req.body.completed = 'true'
+        } 
+        // else if(body.completed === 0) {
+        //     req.body.completed = 'false'
+        // }
         res.status(200).json(proj)
     })
     .catch(err => {
@@ -23,16 +32,9 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const body = req.body;
-    const completeStatus = req.body.completed;
-    // console.log(completeStatus)
 
     Project.add(body)
     .then(proj => {
-        if(completeStatus === false) {
-            completeStatus.toString()
-        } else if(completeStatus === true){
-            completeStatus.toString()
-        } 
         res.status(201).json(proj)
     })
     .catch(err => {

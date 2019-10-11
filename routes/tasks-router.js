@@ -7,14 +7,26 @@ retrieving a list of resources. ==> GET
 const express = require('express');
 
 // May need model functions in order to retrieve the resources
-const Task = require('../helper_model_functions/tasks.js');
+// const Task = require('../helper_functions/tasks.js');
+
+const knex = require('knex');
+const config = require('../knexfile.js');
+const db = knex(config.development);
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    Task.find()
-    .then(task => {
-        res.status(200).json(task)
+
+    const newBody = req.body;
+    console.log(newBody)
+    
+    // db.find()
+    db('tasks')
+    .then(tasks => {
+       let newStatus = tasks.map(task => {
+            return {...task, completed: task.completed ? 'true' : 'false'}
+        })
+        res.status(200).json(newStatus)
     })
     .catch(err => {
         res.status(500).json({ message: "Failed to retrieve the list of task."})
@@ -23,19 +35,10 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const body = req.body;
-    const completeStatus = req.body.completed;
-    // console.log(completeStatus)
 
-    
-
-    Task.add(body)
+    db('tasks')
     .then(task => {
-        if(completeStatus === false) {
-            return completeStatus.toString('false')
-    } else if(completeStatus === true){
-        return completeStatus.toString('true')
-    } 
-        res.status(201).json(task)
+        res.status(201).json({task})
     
     })
     .catch(err => {
